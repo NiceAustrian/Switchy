@@ -10,9 +10,11 @@
         xmlns:vm="clr-namespace:Switchy.ViewModel" 
         mc:Ignorable="d"
         Title="Switchy" Height="500" Width="1000">
+    
     <Window.DataContext>
         <vm:ProcessManager />
     </Window.DataContext>
+    
     <Window.Resources>
         <ObjectDataProvider x:Key="WindowSwitcherTypes" MethodName="GetValues" ObjectType="{x:Type sys:Enum}">
             <ObjectDataProvider.MethodParameters>
@@ -24,6 +26,7 @@
                 <scm:SortDescription PropertyName="Process.ProcessName" Direction="Ascending"/>
             </CollectionViewSource.SortDescriptions>
         </CollectionViewSource>
+        <utils:StringToIntConverter x:Key="StringToIntConverter" />
         <Style TargetType="StackPanel" x:Key="CenterMenuBarStyle">
             <Style.Resources>
                 <Style TargetType="Button">
@@ -34,6 +37,7 @@
             </Style.Resources>
         </Style>
     </Window.Resources>
+    
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="4*"/>
@@ -86,7 +90,7 @@
             </Grid.RowDefinitions>
             <Label Content="Switching windows every x seconds:" Height="40" Padding="10" HorizontalAlignment="Left" Grid.Row="0"/>
             
-            <TextBox Text="{Binding TimerInSecondsText}" Width="120" Margin="10" HorizontalAlignment="Right" Grid.Row="0" PreviewTextInput="NumericOnly"/>
+            <TextBox Text="{Binding TimerInSeconds, Converter={StaticResource StringToIntConverter}}" Width="120" Margin="10" HorizontalAlignment="Right" Grid.Row="0" PreviewTextInput="NumericOnly"/>
             <ListView Name="SelectedProcessListView" ItemsSource="{Binding SelectedProcesses}" SelectionMode="Single" Margin="10,0,10,10" Grid.Row="1">
                 <i:Interaction.Triggers>
                     <i:EventTrigger EventName="MouseDoubleClick">

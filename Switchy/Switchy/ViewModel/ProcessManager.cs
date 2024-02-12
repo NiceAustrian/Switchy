@@ -15,7 +15,7 @@ public partial class ProcessManager : ObservableObject
     [ObservableProperty]
     private string _searchText = string.Empty;
     [ObservableProperty]
-    private string _timerInSecondsText = "60";
+    private int _timerInSeconds = 60;
     [ObservableProperty]
     private WindowSwitcherType _switcherType = WindowSwitcherType.Normal;
 
@@ -107,13 +107,7 @@ public partial class ProcessManager : ObservableObject
             return;
         }
 
-        if (!double.TryParse(TimerInSecondsText, out double timerInSeconds))
-        {
-            MessageBox.Show("You need to enter a value for the window switching time in seconds!");
-            return;
-        }
-
-        _windowHelper = new WindowHelper(SelectedProcesses, timerInSeconds, SwitcherType);
+        _windowHelper = new WindowHelper(SelectedProcesses, TimerInSeconds, SwitcherType);
 
         if (_windowHelper.Start() == -1)
             Stop();
